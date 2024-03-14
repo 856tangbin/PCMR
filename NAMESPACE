@@ -1,0 +1,7 @@
+exportPattern("^[[:alpha:]]+")
+importFrom("grDevices", "adjustcolor")
+importFrom("graphics", "abline", "lines", "polygon")
+importFrom("stats", "cov", "dnorm", "optimize", "pchisq", "quantile",
+           "var","weights")
+
+export("PCMR","PCMR_initEst","PCMR_testCausal","pleiClassify","pleiClassifyIntact","PCMR_plot")

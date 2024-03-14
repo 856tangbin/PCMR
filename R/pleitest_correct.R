@@ -1,0 +1,48 @@
+PCMR_correct = function(result,ref_beta_outcome,ref_se_outcome,samples=100,sample_boot = 30,cores=15, err_boot=100){
+
+    # Prepare for multithread processing
+    Seqs = list()
+    for(i in seq(samples*sample_boot)){
+        if(i %% sample_boot == 1){
+            Seqs[[i]] = sample(seq(length(ref_beta_outcome)),(length(result$Paras$beta_ex)))
+        }else{
+            Seqs[[i]] = Seqs[[i-1]]
+        }
+    }
+
+    # bootstrapping
+    # multithread
+    sub_cl <- makeCluster(cores)
+    clusterExport(sub_cl,"Seqs",envir = environment())
+    clusterExport(sub_cl,".boot",envir = environment())
+    Cup = clusterApplyLB(sub_cl,seq(samples*sample_boot),.boot_sample,result,ref_beta_outcome,ref_se_outcome)
+    Cup_gamma = matrix(unlist(Cup),ncol=2,byrow=T)
+    stopCluster(sub_cl) # close
+
+    # Data decomposition
+    Cup_chi2 = c()
+    for(i in seq(samples)){
+        Cup_gamma_sub = Cup_gamma[seq((i-1)*sample_boot+1,i*sample_boot),]
+        Cup_chi2 = c(Cup_chi2,(mean(Cup_gamma_sub[,1]) - mean(Cup_gamma_sub[,2]))^2/( var(Cup_gamma_sub[,1]) +  var(Cup_gamma_sub[,2])))
+    }
+
+    # fitting to estimate parameter c, and the range error
+    temp = function(c,Chi2s){
+        return(sum((sort((pchisq(Chi2s,1*c,lower.tail = F))) - sort((seq(Chi2s)/length(Chi2s))))^2))
+    }
+    result$correct_factor = optimize(temp,lower=0,upper=10,Chi2s=Cup_chi2)$minimum
+
+    # estimate standard error of estimate correct_factor
+    C_tmp = c()
+    for(i in seq(err_boot)){
+        C_tmp = c(C_tmp,optimize(temp,lower=0,upper=10,Chi2s=sample(Cup_chi2,replace = T))$minimum)
+    }
+    result$correct_factor_sd = sd(C_tmp)
+
+    # corrected Pvalue range
+    result$CHVP_test_correct = pchisq(qchisq(result$CHVP_test,1,lower.tail = F),result$correct_factor,lower.tail = F)
+    result$CHVP_test_correctRange = pchisq(qchisq(result$CHVP_test,1,lower.tail = F),
+                                           result$correct_factor + c(-1.96,1.96) * result$correct_factor_sd,
+                                           lower.tail = F)
+    return(result)
+}
