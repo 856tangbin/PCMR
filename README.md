@@ -1,2 +1,2 @@
 # PCMR
- Pleiotropic Clustering of Mendelian Randomization
+> Pleiotropic Clustering of Mendelian Randomization. 
