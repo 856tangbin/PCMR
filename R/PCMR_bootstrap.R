@@ -26,7 +26,7 @@ PCMR_testCausal_bootstrap = function(result,samples=1000,cores=15){
     result$bootstrap$P_min_permut = 1 - abs(sum(Cup_gamma[,1] > 0) - sum(Cup_gamma[,1] < 0))/samples
     result$bootstrap$P_max_permut = 1 - abs(sum(Cup_gamma[,2] > 0) - sum(Cup_gamma[,2] < 0))/samples
 
-    result$CHVP_test = pchisq((result$bootstrap$mean_minClass - result$bootstrap$mean_maxClass)^2/
-                                  ( result$bootstrap$sd_minClass^2 +  result$bootstrap$sd_maxClass^2),1,lower.tail = F)
+    result$D_HVP = (result$bootstrap$mean_minClass - result$bootstrap$mean_maxClass)^2/
+                        ( result$bootstrap$sd_minClass^2 +  result$bootstrap$sd_maxClass^2)
     return(result)
 }

@@ -148,8 +148,13 @@ PCMR_testCausal = function(result){
 
 
 # testing random effect of correlated pleiotropy
-PCMR_testCorPlei = function(result,samples=1000,cores=15){
-    return(PCMR_testCausal_bootstrap(result,samples=samples,cores=cores))
+PCMR_testCorPlei = function(result){
+    # corrected Pvalue range
+    result$CHVP_test = pchisq(result$D_HVP,result$c,lower.tail = F)
+    result$CHVP_test_Range = pchisq(result$D_HVP,
+                                    result$c + c(-1.96,1.96) * result$c_sd,
+                                    lower.tail = F)
+    return(result)
 }
 
 

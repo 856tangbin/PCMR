@@ -1,4 +1,4 @@
-PCMR_correct = function(result,ref_beta_outcome,ref_se_outcome,samples=100,sample_boot = 30,cores=15, err_boot=100){
+PCMR_cEst = function(result,ref_beta_outcome,ref_se_outcome,samples=100,sample_boot = 30,cores=15, err_boot=100){
 
     # Prepare for multithread processing
     Seqs = list()
@@ -30,19 +30,14 @@ PCMR_correct = function(result,ref_beta_outcome,ref_se_outcome,samples=100,sampl
     temp = function(c,Chi2s){
         return(sum((sort((pchisq(Chi2s,1*c,lower.tail = F))) - sort((seq(Chi2s)/length(Chi2s))))^2))
     }
-    result$correct_factor = optimize(temp,lower=0,upper=10,Chi2s=Cup_chi2)$minimum
+    result$c = optimize(temp,lower=0,upper=10,Chi2s=Cup_chi2)$minimum
 
     # estimate standard error of estimate correct_factor
     C_tmp = c()
     for(i in seq(err_boot)){
         C_tmp = c(C_tmp,optimize(temp,lower=0,upper=10,Chi2s=sample(Cup_chi2,replace = T))$minimum)
     }
-    result$correct_factor_sd = sd(C_tmp)
+    result$c_sd = sd(C_tmp)
 
-    # corrected Pvalue range
-    result$CHVP_test_correct = pchisq(qchisq(result$CHVP_test,1,lower.tail = F),result$correct_factor,lower.tail = F)
-    result$CHVP_test_correctRange = pchisq(qchisq(result$CHVP_test,1,lower.tail = F),
-                                           result$correct_factor + c(-1.96,1.96) * result$correct_factor_sd,
-                                           lower.tail = F)
     return(result)
 }
