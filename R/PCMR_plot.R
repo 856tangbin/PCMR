@@ -36,7 +36,7 @@ PCMR_plot = function(result,Color = NA,exposure="exposure X",outcome="outcome Y"
     plot( result$Paras$beta_ex,result$Paras$beta_out,
           xlim=c(xmin,xmax),
           ylim=c(ymin,ymax),
-          xlab=past0("Genetic association with ",exposure),ylab=paste0("Genetic association with ",outcome),
+          xlab=paste0("Genetic association with ",exposure),ylab=paste0("Genetic association with ",outcome),
           col=Color[PleiClass],font.lab = 3,pch=16)
 
     # plot conditional intervals of IVs

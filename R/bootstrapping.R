@@ -19,8 +19,8 @@
 
     result_sample = result
 
-    result_sample$Paras$beta_out = beta_outcome[Seqs[[.]]]
-    result_sample$Paras$beta_out_se = se_outcome[Seqs[[.]]]
+    result_sample$Paras$beta_out = beta_outcome[Seqs[[.]]] + result$est1 * result$Paras$beta_ex
+    result_sample$Paras$beta_out_se = sqrt(se_outcome[Seqs[[.]]]**2 + (result$est1 * result$Paras$beta_ex_se)**2)
 
     return(.boot(.,result_sample))
 }

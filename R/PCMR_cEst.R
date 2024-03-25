@@ -1,5 +1,9 @@
 PCMR_cEst = function(result,ref_beta_outcome,ref_se_outcome,samples=100,sample_boot = 30,cores=15, err_boot=100){
 
+
+    result$est1 = PCMR(result$Paras$beta_ex, result$Paras$beta_ex_se,
+                       result$Paras$beta_out,result$Paras$beta_out_se,num_gamma = 1,model="1")$gamma
+
     # Prepare for multithread processing
     Seqs = list()
     for(i in seq(samples*sample_boot)){

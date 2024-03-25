@@ -24,10 +24,10 @@ PCMR_plot(result_random)
 # Part 2 Heterogeneity test in detecting correlated horizontal pleiotropy
 result_random = PCMR_cEst(result_random,
                          ref_beta_outcome = X_clump1$beta_hat_2,ref_se_outcome = X_clump1$seb2,
-                         samples=20,sample_boot = 30) # estimate the factor c
+                         samples=20,sample_boot = 30,cores = 8) # estimate the factor c
 print(c(result_random$c,result_random$c_sd))
 
-result_random = PCMR_testCausal_bootstrap(result_random,samples=100,cores=15) # bootstrapping to estimate D_HVP
+result_random = PCMR_testCausal_bootstrap(result_random,samples=100,cores=8) # bootstrapping to estimate D_HVP
 print(c(result_random$D_HVP))
 
 result_random = PCMR_testCorPlei(result_random)
