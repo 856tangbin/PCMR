@@ -7,6 +7,15 @@ X_clump = read.table("./data/scz_mdd/IVs_scz_mdd.csv",
 X_clump1 = read.table("./data/scz_mdd/initEst_scz_mdd.csv",
                       header = 1,
                       sep = ",")
+
+
+X_clump = read.table("C:/Users/BinTang/Documents/WeChat Files/wxid_2uni6z6hmssr22/FileStorage/File/2024-04/IVs.csv",
+                      header = 1,
+                      sep = ",")
+X_clump1 = read.table("C:/Users/BinTang/Documents/WeChat Files/wxid_2uni6z6hmssr22/FileStorage/File/2024-04/initEst.csv",
+                     header = 1,
+                     sep = ",")
+
 set.seed(100)
 
 # Part 1 estimate initial values
