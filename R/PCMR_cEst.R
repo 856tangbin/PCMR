@@ -32,8 +32,10 @@ PCMR_cEst = function(result,ref_beta_outcome,ref_se_outcome,samples=100,sample_b
 
     # fitting to estimate parameter c, and the range error
     temp = function(c,Chi2s){
-        return(sum((sort((pchisq(Chi2s,1*c,lower.tail = F))) - sort((seq(Chi2s)/length(Chi2s))))^2))
+        # return(sum((sort((pchisq(Chi2s,1*c,lower.tail = F))) - sort((seq(Chi2s)/length(Chi2s))))^2))
+        return(sum((sort(-log(pchisq(Cup_chi2,1*c,lower.tail = F))) - sort(-log(seq(Cup_chi2)/length(Cup_chi2))))^2))
     }
+
     result$c = optimize(temp,lower=0,upper=10,Chi2s=Cup_chi2)$minimum
 
     # estimate standard error of estimate correct_factor
