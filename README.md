@@ -28,7 +28,7 @@ PCMR is a clustering model for addressing various horizontal or vertical pleiotr
 
 ## Example
 
-> In the application from schizophrenia to major depressive disorder. 
+In the application from schizophrenia to major depressive disorder. 
 
 Instrument variables: [IVs_scz_mdd.csv](data\scz_mdd\IVs_scz_mdd.csv); Random sample variants: [initEst_scz_mdd.csv](data\scz_mdd\initEst_scz_mdd.csv). 
 
@@ -60,7 +60,7 @@ result_random = PCMR_testCorPlei(result_random) # calculate Pvalue of heterogene
 result_random = PCMR_testCausal(result_random)
 ```
 
-*Note: The bootstrapping calculations can be slow, this example took about 30 mins. You can also directly download [the results](data\scz_mdd\scz_mdd_results.RData) of the completed calculations.*
+*Note: The bootstrapping calculations are time consuming this example took about 30 mins. You can also directly download [the results](data\scz_mdd\scz_mdd_results.RData) of the completed calculations.*
 
 
 
@@ -103,13 +103,13 @@ The default model is the random effect model of PCMR (`model=1`).
 
 ```R
 > print(c(result_random$c,result_random$c_sd))
-[1] 1.7980379 0.1910851
+[1] 1.2558524 0.1440749
 
 > print(c(result_random$D_HVP))
-[1] 33.03465
+[1] 34.93516
 
 > print(c(result_random$CHVP_test,result_random$CHVP_test_Range)) # Pvalue of heterogeniety, and error range of this Pvalue
-[1] 4.698667e-08 2.297677e-08 8.972837e-08
+[1] 6.139949e-09 3.193727e-09 1.102149e-08
 ```
 
 The heterogeneity test implies that there is in significantly correlated horizontal pleiotropy between SCZ between MDD ($P_{plei-test}=4.70\times 10^{-08}$). 
@@ -163,10 +163,10 @@ PCMR also contains a test based on bootstrapping against a particular correlated
 
 ```R
 > print(c(result_random$bootstrap$mean_minClass,result_random$bootstrap$sd_minClass)) # bootstrapping for 1000 times
-[1] 0.01935429 0.02208343
+[1] 0.0180495 0.0215044
 
 > result_random$bootstrap$P_min
-[1] 0.3817181
+[1] 0.4021501
 ```
 
 Based on the smaller correlated HVP effect, it is an insignificant relationship from SCZ to MDD. 
