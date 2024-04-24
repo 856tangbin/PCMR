@@ -1,14 +1,18 @@
 # PCMR: Pleiotropic Clustering of Mendelian Randomization
 
-> This R package implements the PCMR method described in 
+> This R package implements the PCMR method,  providing efficient solutions and new insights for MR in clinically relevant or genetically overlapping traits.
 
 ## Installation
 
-```
+```R
 # install.packages("devtools")
 library(devtools)
 install_github("856tangbin/PCMR")
 ```
+
+
+
+
 
 ## Usage 
 
@@ -18,13 +22,17 @@ PCMR is a clustering model for addressing various horizontal or vertical pleiotr
 - **Heterogeneity test** (PCMR's pleiotropy test): Detect the presence of correlated horizontal pleiotropy using the function of `PCMR_testCorPlei`;
 - **Causal analysis** (PCMR's causality evaluation): Evaluate whether a discernible dominant IV category supports a non-zero causal effect using the function of `PCMR_testCausal`.
 
+
+
+
+
 ## Example
 
 > In the application from schizophrenia to major depressive disorder. 
 
-Instrument variables: [IVs_scz_mdd.csv](data\scz_mdd\IVs_scz_mdd.csv); Random sample variants: [initEst_scz_mdd.csv](data\scz_mdd\initEst_scz_mdd.csv) 
+Instrument variables: [IVs_scz_mdd.csv](data\scz_mdd\IVs_scz_mdd.csv); Random sample variants: [initEst_scz_mdd.csv](data\scz_mdd\initEst_scz_mdd.csv). 
 
-These instruments and random sample variants are obtained through functions in the R package cause, as detailed: linkkkkkkkkkkkkkkkkkkkkkkkkkkk
+These instruments and random sample variants are obtained through functions in the R package cause, see`data\scz_mdd\IVs_filter.R`. 
 
 ```R
 library(PCMR)
@@ -33,7 +41,7 @@ library(parallel)
 X_clump = read.table("./data/scz_mdd/IVs_scz_mdd.csv",header=1,sep=",")
 X_clump1 = read.table("./data/scz_mdd/initEst_scz_mdd.csv",header=1,sep=",")
 
-set.seed(100)
+set.seed(0)
 # 0. Estimate initial values
 init = PCMR_initEst(X_clump1$beta_hat_1,X_clump1$seb1,
                     X_clump1$beta_hat_2,X_clump1$seb2)
@@ -51,6 +59,10 @@ result_random = PCMR_testCorPlei(result_random) # calculate Pvalue of heterogene
 # 3. Causality evaluation in the presence of correlated horizontal pleiotropy
 result_random = PCMR_testCausal(result_random)
 ```
+
+*Note: The bootstrapping calculations can be slow, this example took about 30 mins. You can also directly download [the results](data\scz_mdd\scz_mdd_results.RData) of the completed calculations.*
+
+
 
 ## Results
 
@@ -76,6 +88,9 @@ The default model is the random effect model of PCMR (`model=1`).
  33.33333%  66.66667% 
 0.01703264 0.18722993 
 
+> result_random$gSigma2
+[1] 0.004008198 0.002144189
+
 > result_random$pi_gamma
 [1] 0.4981254 0.5018746
 
@@ -88,14 +103,16 @@ The default model is the random effect model of PCMR (`model=1`).
 
 ```R
 > print(c(result_random$c,result_random$c_sd))
-[1] 2.3005055 0.4080941
+[1] 1.7980379 0.1910851
+
 > print(c(result_random$D_HVP))
-[1] 33.98095
+[1] 33.03465
+
 > print(c(result_random$CHVP_test,result_random$CHVP_test_Range)) # Pvalue of heterogeniety, and error range of this Pvalue
-[1] 6.914515e-08 1.658954e-08 2.304803e-07
+[1] 4.698667e-08 2.297677e-08 8.972837e-08
 ```
 
-The heterogeneity test implies that there is in significantly correlated horizontal pleiotropy between SCZ between MDD ($P_{plei-test}=6.91\times 10^{-08}$). 
+The heterogeneity test implies that there is in significantly correlated horizontal pleiotropy between SCZ between MDD ($P_{plei-test}=4.70\times 10^{-08}$). 
 
 ### 3.  Causality evaluation in the presence of correlated horizontal pleiotropy
 
@@ -142,9 +159,14 @@ stringi::stri_c(X_clump$rsid[probability_1 < 1 - prb_thrd],collapse = " ") # The
 
 The BLUE category showed significant enrichment in biological processes primarily related to signaling transmission, with chemical synaptic transmission being the second significant ($2.344\times 10^{-3}$), while the GRAY category exhibited enrichment in two biological processes. As psychiatric disorders are associated with signal transmission, the BLUE category with a larger correlated HVP effect might exhibit correlated horizontal pleiotropy. 
 
-PCMR also contains a test based on bootstrapping against a particular correlated HVP effect. (If the effect is determined to be causal effect, the bootstrapping test is a causal inference). ????
+PCMR also contains a test based on bootstrapping against a particular correlated HVP effect. (If the effect is determined to be causal effect, the bootstrapping test is a causal inference)：
 
+```R
+> print(c(result_random$bootstrap$mean_minClass,result_random$bootstrap$sd_minClass)) # bootstrapping for 1000 times
+[1] 0.01935429 0.02208343
+
+> result_random$bootstrap$P_min
+[1] 0.3817181
 ```
 
-```
-
+Based on the smaller correlated HVP effect, it is an insignificant relationship from SCZ to MDD. 
