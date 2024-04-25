@@ -32,14 +32,15 @@ PCMR is a clustering model for addressing various horizontal or vertical pleiotr
 
 Instrument variables: [IVs_scz_mdd.csv](data\scz_mdd\IVs_scz_mdd.csv); Random sample variants: [initEst_scz_mdd.csv](data\scz_mdd\initEst_scz_mdd.csv). 
 
-These instruments and random sample variants are obtained through functions in the R package cause, see`./data/scz_mdd/IVs_filter.R`. 
+These instruments and random sample variants are obtained through functions in the R package cause, see`./demo/IVs_filter.R`. 
 
 ```R
 library(PCMR)
 library(parallel)
 
-X_clump = read.table("./data/scz_mdd/IVs_scz_mdd.csv",header=1,sep=",")
-X_clump1 = read.table("./data/scz_mdd/initEst_scz_mdd.csv",header=1,sep=",")
+# X_clump = read.table("./data/scz_mdd/IVs_scz_mdd.csv",header=1,sep=",")
+# X_clump1 = read.table("./data/scz_mdd/initEst_scz_mdd.csv",header=1,sep=",")
+data(IVs_and_InitEst,package="PCMR")
 
 set.seed(0)
 # 0. Estimate initial values
