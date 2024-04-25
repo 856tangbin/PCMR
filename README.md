@@ -62,7 +62,7 @@ result_random = PCMR_testCorPlei(result_random) # calculate Pvalue of heterogene
 result_random = PCMR_testCausal(result_random)
 ```
 
-*Note: The bootstrapping calculations are time-consuming this example. This example took about 30 minutes. You can also directly load the resultsof the completed calculations,* `data(scz_mdd_results,package="PCMR")`.
+*Note: The bootstrapping calculations are time-consuming this example. This example took about 30 minutes. You can also directly load the results of the completed calculations,* `data(scz_mdd_results,package="PCMR")`.
 
 
 
