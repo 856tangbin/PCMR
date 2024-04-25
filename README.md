@@ -20,7 +20,7 @@ PCMR is a clustering model for addressing various horizontal or vertical pleiotr
 
 - **Pleiotropic Clustering** (PCMR): Cluster instruments using the function of `PCMR`;
 - **Heterogeneity test** (PCMR's pleiotropy test): Detect the presence of correlated horizontal pleiotropy using the function of `PCMR_testCorPlei`;
-- **Causal analysis** (PCMR's causality evaluation): Evaluate whether a discernible dominant IV category supports a non-zero causal effect using the function of `PCMR_testCausal`.
+- **Causal analysis** (PCMR's causality evaluation): Suggest to Evaluate whether a discernible dominant IV category supports a non-zero causal effect using the function of `PCMR_testCausal`. Recommended to be applied in the presence of correlated horizontal pleiotropy, e.g. $P_{plei-test} <= 0.20$. 
 
 
 
@@ -57,6 +57,7 @@ result_random = PCMR_testCausal_bootstrap(result_random,cores=10) # bootstrappin
 result_random = PCMR_testCorPlei(result_random) # calculate Pvalue of heterogeneity
 
 # 3. Causality evaluation in the presence of correlated horizontal pleiotropy
+# Recommended to be applied in the presence of correlated horizontal pleiotropy, e.g. P_{plei-test} <= 0.20. 
 result_random = PCMR_testCausal(result_random)
 ```
 
