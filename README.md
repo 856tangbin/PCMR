@@ -1,6 +1,6 @@
 # PCMR: Pleiotropic Clustering of Mendelian Randomization
 
-> This R package implements the PCMR method,  providing efficient solutions and new insights for MR in clinically relevant or genetically overlapping traits.
+> This R package implements the PCMR method and provides efficient solutions and new insights for MR in clinically relevant or genetically overlapping traits.
 
 ## Installation
 
@@ -28,11 +28,11 @@ PCMR is a clustering model for addressing various horizontal or vertical pleiotr
 
 ## Example
 
-In the application from schizophrenia to major depressive disorder. 
+> In the application from schizophrenia (SCZ) to major depressive disorder (MDD)
 
 Instrument variables: [IVs_scz_mdd.csv](data\scz_mdd\IVs_scz_mdd.csv); Random sample variants: [initEst_scz_mdd.csv](data\scz_mdd\initEst_scz_mdd.csv). 
 
-These instruments and random sample variants are obtained through functions in the R package cause, see`data\scz_mdd\IVs_filter.R`. 
+These instruments and random sample variants are obtained through functions in the R package cause, see`./data/scz_mdd/IVs_filter.R`. 
 
 ```R
 library(PCMR)
@@ -60,7 +60,7 @@ result_random = PCMR_testCorPlei(result_random) # calculate Pvalue of heterogene
 result_random = PCMR_testCausal(result_random)
 ```
 
-*Note: The bootstrapping calculations are time consuming this example took about 30 mins. You can also directly download [the results](data\scz_mdd\scz_mdd_results.RData) of the completed calculations.*
+*Note: The bootstrapping calculations are time-consuming this example. This example took about 30 minutes. You can also directly download [the results](data\scz_mdd\scz_mdd_results.RData) of the completed calculations.*
 
 
 
@@ -121,7 +121,7 @@ The heterogeneity test implies that there is in significantly correlated horizon
 [1] 0.3290909
 ```
 
-The results of PCMR's causality evaluation indicated that the causal effect of SCZ on MDD was not significant ($P=0.329 > 0.05$).
+The results of PCMR's causality evaluation indicated that the causal effect of SCZ on MDD was insignificant ($P=0.329 > 0.05$).
 
 
 
@@ -129,7 +129,7 @@ The results of PCMR's causality evaluation indicated that the causal effect of S
 
 ## Integrating biological information for enhancing causal inference
 
-The instrument classified by PCMR can be mapped into genes at website: https://biit.cs.ut.ee/gprofiler/snpense, and then using those genes for enrichment analysis of biological process at website: https://biit.cs.ut.ee/gprofiler/gost. The enrichment analysis may aid in identifying which IV category determines the causality.
+The instrument classified by PCMR can be mapped into genes at the website: https://biit.cs.ut.ee/gprofiler/snpense, and then using those genes for enrichment analysis of biological process at the website: https://biit.cs.ut.ee/gprofiler/gost. The enrichment analysis may aid in identifying which IV category determines the causality.
 
 ```R
 prb_thrd = 0.5
@@ -139,7 +139,7 @@ stringi::stri_c(X_clump$rsid[probability_1 > prb_thrd],collapse = " ") # The IV 
 stringi::stri_c(X_clump$rsid[probability_1 < 1 - prb_thrd],collapse = " ") # The IV category with correlated HVP effect of result$gamma[1] 
 ```
 
-**The IV category with correlated HVP effect of 0.01703264** 
+**The IV category with correlated HVP effect of 0.01703264 (GRAY)**
 
 ```R
 > stringi::stri_c(X_clump$rsid[probability_1 > prb_thrd],collapse = " ")
@@ -148,7 +148,7 @@ stringi::stri_c(X_clump$rsid[probability_1 < 1 - prb_thrd],collapse = " ") # The
 
 ![gProfiler_hsapiens_2024-04-24_12-16-52](README.assets/gProfiler_hsapiens_2024-04-24_12-16-52.png)
 
-**The IV category with correlated HVP effect of 0.18722993** 
+**The IV category with correlated HVP effect of 0.18722993 (BLUE)**
 
 
 ```R
@@ -159,7 +159,7 @@ stringi::stri_c(X_clump$rsid[probability_1 < 1 - prb_thrd],collapse = " ") # The
 
 The BLUE category showed significant enrichment in biological processes primarily related to signaling transmission, with chemical synaptic transmission being the second significant ($2.344\times 10^{-3}$), while the GRAY category exhibited enrichment in two biological processes. As psychiatric disorders are associated with signal transmission, the BLUE category with a larger correlated HVP effect might exhibit correlated horizontal pleiotropy. 
 
-PCMR also contains a test based on bootstrapping against a particular correlated HVP effect. (If the effect is determined to be causal effect, the bootstrapping test is a causal inference)：
+PCMR also contains a test based on bootstrapping against a particular correlated HVP effect. (If the effect is determined to be the causal effect, the bootstrapping test is a causal inference)：
 
 ```R
 > print(c(result_random$bootstrap$mean_minClass,result_random$bootstrap$sd_minClass)) # bootstrapping for 1000 times
@@ -169,4 +169,4 @@ PCMR also contains a test based on bootstrapping against a particular correlated
 [1] 0.4021501
 ```
 
-Based on the smaller correlated HVP effect, it is an insignificant relationship from SCZ to MDD. 
+Based on the smaller correlated HVP effect, there is an insignificant relationship from SCZ to MDD. 
