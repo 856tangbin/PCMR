@@ -85,6 +85,9 @@ PCMR = function(beta_ex, beta_ex_se, beta_out, beta_out_se,num_gamma,model="2",i
     # The clustering of PCMR
     result = pleiClassify(Paras)
 
+    # Causality test based on the clustering results
+    result = PCMR_testCausal(result)
+
     if(length(result$gamma) > 1){
         if(abs(result$gamma[1] - result$gamma[2])) < 1e-3){
             print("Since the estimated correlated HVP effects are identical, there may in absence of correlated pleiotropy.")
