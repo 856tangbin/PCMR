@@ -91,7 +91,7 @@ The default model is the random effect model of PCMR (`model=1`).
 > PCMR_plot(result_random)
 ```
 
-<img src="README.assets/Rplot_random.svg" alt="Rplot_random"/>
+<img src="README.assets/Rplot_random.svg" alt="Rplot_random" align=center />
 
 ### 2. Heterogeneity test in detecting correlated horizontal pleiotropy
 
