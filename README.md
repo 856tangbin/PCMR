@@ -2,18 +2,6 @@
 
 > This R package implements the PCMR method and provides efficient solutions and new insights for MR in clinically relevant or genetically overlapping traits.
 
-## Installation
-
-```R
-# install.packages("devtools")
-library(devtools)
-install_github("856tangbin/PCMR")
-```
-
-
-
-
-
 ## Usage 
 
 PCMR is a clustering model for addressing various horizontal or vertical pleiotropic (HVP) effects. PCMR contains three components: 
@@ -22,9 +10,13 @@ PCMR is a clustering model for addressing various horizontal or vertical pleiotr
 - **Heterogeneity test** (PCMR's pleiotropy test): Detect the presence of correlated horizontal pleiotropy using the function of `PCMR_testCorPlei`;
 - **Causal analysis** (PCMR's causality evaluation): Suggest to Evaluate whether a discernible dominant IV category supports a non-zero causal effect using the function of `PCMR_testCausal`. Recommended to be applied in the presence of correlated horizontal pleiotropy, e.g. $P_{plei-test} <= 0.20$. 
 
+## Installation
 
-
-
+```R
+# install.packages("devtools")
+library(devtools)
+install_github("856tangbin/PCMR")
+```
 
 ## Example
 
