@@ -106,7 +106,7 @@ The default model is the random effect model of PCMR (`model=1`).
 [1] 9.217905e-09 2.342845e-09 3.034035e-08
 ```
 
-The heterogeneity test implies that there is in significantly correlated horizontal pleiotropy between SCZ between MDD ($P_{plei-test}=4.70\times 10^{-08}$). 
+The heterogeneity test implies that there is in significantly correlated horizontal pleiotropy between SCZ between MDD ($P_{plei-test}=9.22\times 10^{-09}$). 
 
 ### 3.  Causality evaluation in the presence of correlated horizontal pleiotropy
 
