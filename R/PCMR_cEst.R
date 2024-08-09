@@ -15,19 +15,24 @@ PCMR_cEst = function(result,ref_beta_outcome,ref_se_outcome,samples=100,sample_b
     }
 
     # bootstrapping
+    Ncol = result$Paras$num_gamma + 1
+
     # multithread
     sub_cl <- makeCluster(cores)
     clusterExport(sub_cl,"Seqs",envir = environment())
     clusterExport(sub_cl,".boot",envir = environment())
     Cup = clusterApplyLB(sub_cl,seq(samples*sample_boot),.boot_sample,result,ref_beta_outcome,ref_se_outcome)
-    Cup_gamma = matrix(unlist(Cup),ncol=2,byrow=T)
+    Cup_gamma = matrix(unlist(Cup),ncol=Ncol,byrow=T)
     stopCluster(sub_cl) # close
 
     # Data decomposition
     Cup_chi2 = c()
     for(i in seq(samples)){
         Cup_gamma_sub = Cup_gamma[seq((i-1)*sample_boot+1,i*sample_boot),]
-        Cup_chi2 = c(Cup_chi2,(mean(Cup_gamma_sub[,1]) - mean(Cup_gamma_sub[,2]))^2/( var(Cup_gamma_sub[,1]) + var(Cup_gamma_sub[,2])))
+        gamma_min_sub = Cup_gamma_sub[,1]
+        gamma_max_sub = Cup_gamma_sub[,Ncol-1]
+
+        Cup_chi2 = c(Cup_chi2,(mean(gamma_min_sub) - mean(gamma_max_sub))^2/(var(gamma_min_sub) + var(gamma_max_sub)))
     }
 
     # fitting to estimate parameter c, and the range error

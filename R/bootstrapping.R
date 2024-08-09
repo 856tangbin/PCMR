@@ -11,7 +11,19 @@
     Paras$beta_out_se = result$Paras$beta_out_se[Ind]
     results0 = pleiClassify(Paras)
 
-    return(sort(results0$gamma))
+
+    if (sd(results0$pi_gamma) < results0$Paras$thred){
+        dominant_group = -1
+    }else{
+        largest_group = order(results0$pi_gamma,decreasing = T)[1]
+        for(ind in order(results0$gamma)){
+            if(ind == largest_group){
+                dominant_group = ind
+            }
+        }
+    }
+
+    return(c(sort(results0$gamma),dominant_group))
 }
 
 .boot_sample = function(.,result,beta_outcome,se_outcome){
