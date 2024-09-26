@@ -130,7 +130,6 @@ PCMR_testCausal = function(result){
 
     # Selecting the higher proportion of gamma be causal effect. And test H0 by likelihood-ratio test: causal effect whether is zero.
     argmax = which(result$pi_gamma == max(result$pi_gamma))[1]
-    result$effect = Paras0$gamma
     Paras0$gamma[argmax] = 0
     Paras0$paraUpdate$gamma[argmax] = FALSE
 

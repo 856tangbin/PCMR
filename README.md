@@ -8,7 +8,7 @@ PCMR is a clustering model for addressing various horizontal or vertical pleiotr
 
 - **Pleiotropic Clustering** (PCMR): Cluster instruments using the function of `PCMR`;
 - **Heterogeneity test** (PCMR's pleiotropy test): Detect the presence of correlated horizontal pleiotropy using the function of `PCMR_testCorPlei`;
-- **Causal analysis** (PCMR's causality evaluation): Suggest to Evaluate whether a discernible dominant IV category supports a non-zero causal effect using the function of `PCMR_testCausal`. Recommended to be applied in the presence of correlated horizontal pleiotropy, e.g. $P_{plei-test} <= 0.20$. 
+- **Causal analysis** (PCMR's causality evaluation): Evaluate whether a discernible dominant IV category supports a non-zero causal effect using the function of `PCMR_testCausal`. Recommended to be applied in the presence of correlated horizontal pleiotropy, e.g. $P_{plei-test} <= 0.20$. 
 
 ## Installation
 
@@ -113,6 +113,8 @@ The heterogeneity test implies that there is in significantly correlated horizon
 ```R
 > print(result_random$Pvalue)
 [1] 0.3290909
+
+> print(result_random$effect,result_random$dominant)
 ```
 
 The results of PCMR's causality evaluation indicated that the causal effect of SCZ on MDD was insignificant ($P=0.329 > 0.05$).
@@ -130,7 +132,7 @@ prb_thrd = 0.5
 probability_1 = rowSums(result_random$W[,1,]) # the probability of IVs belonging to 1th IV category
 
 stringi::stri_c(X_clump$rsid[probability_1 > prb_thrd],collapse = " ") # The IV category with correlated HVP effect of result$gamma[1] 
-stringi::stri_c(X_clump$rsid[probability_1 < 1 - prb_thrd],collapse = " ") # The IV category with correlated HVP effect of result$gamma[1] 
+stringi::stri_c(X_clump$rsid[probability_1 < 1 - prb_thrd],collapse = " ") # The IV category with correlated HVP effect of result$gamma[2] 
 ```
 
 **The IV category with correlated HVP effect of 0.01703264 (GRAY)**

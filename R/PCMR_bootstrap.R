@@ -36,6 +36,7 @@ PCMR_testCausal_bootstrap = function(result,samples=1000,cores=15){
     # The probability of dominant IV group
     result$dom_prob = c(table(Cup_gamma[Cup_gamma[,Ncol]>0,Ncol]))/sum(Cup_gamma[,Ncol]>0)
     result$dom_prob = result$dom_prob[order(result$gamma)]
+    result$discernable_prob = max(result$dom_prob)
 
     return(result)
 }
