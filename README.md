@@ -58,7 +58,7 @@ result_random = PCMR_testCausal(result_random)
 
 
 
-## Results 结果重跑了
+## Results
 
 ### 0. Estimating initial value
 
