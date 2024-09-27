@@ -35,21 +35,21 @@ library(parallel)
 data(IVs_and_InitEst,package="PCMR")
 
 set.seed(0)
-# 0. Estimate initial values
+# 0. Estimate initial values.
 init = PCMR_initEst(X_clump1$beta_hat_1,X_clump1$seb1,
                     X_clump1$beta_hat_2,X_clump1$seb2)
 
-# 1. Pleiotropic clustering
+# 1. Pleiotropic clustering.
 result_random = PCMR(X_clump$beta_hat_1, X_clump$seb1,
               X_clump$beta_hat_2,X_clump$seb2,num_gamma = 2,model="1",
               isIntact=T,rho=init$rho,sigma2 = init$sigma2)
 
-# 2. Heterogeneity test in detecting correlated horizontal pleiotropy
-result_random = PCMR_cEst(result_random,ref_beta_outcome = X_clump1$beta_hat_2,ref_se_outcome = X_clump1$seb2,cores=10) # estimate the factor c
-result_random = PCMR_testCausal_bootstrap(result_random,cores=10) # bootstrapping to estimate D_HVP
-result_random = PCMR_testCorPlei(result_random) # calculate Pvalue of heterogeneity
+# 2. Heterogeneity test in detecting correlated horizontal pleiotropy.
+result_random = PCMR_cEst(result_random,ref_beta_outcome = X_clump1$beta_hat_2,ref_se_outcome = X_clump1$seb2,cores=10) # Estimate the factor c.
+result_random = PCMR_testCausal_bootstrap(result_random,cores=10) # Bootstrapping to estimate D_HVP.
+result_random = PCMR_testCorPlei(result_random) # Calculate Pvalue of heterogeneity according to c and D_HVP.
 
-# 3. Causality evaluation in the presence of correlated horizontal pleiotropy
+# 3. Causality evaluation in the presence of correlated horizontal pleiotropy.
 # Recommended to be applied in the presence of correlated horizontal pleiotropy, e.g. P_{plei-test} <= 0.20. 
 result_random = PCMR_testCausal(result_random)
 ```
@@ -58,7 +58,7 @@ result_random = PCMR_testCausal(result_random)
 
 
 
-## Results
+## Results 结果重跑了
 
 ### 0. Estimating initial value
 
@@ -114,7 +114,7 @@ The heterogeneity test implies that there is in significantly correlated horizon
 > print(result_random$Pvalue)
 [1] 0.3290909
 
-> print(result_random$effect,result_random$dominant)
+> print(c(result_random$effect,result_random$discernable_prob))
 ```
 
 The results of PCMR's causality evaluation indicated that the causal effect of SCZ on MDD was insignificant ($P=0.329 > 0.05$).
@@ -125,7 +125,7 @@ The results of PCMR's causality evaluation indicated that the causal effect of S
 
 ## Integrating biological information for enhancing causal inference
 
-The instrument classified by PCMR can be mapped into genes at the website: https://biit.cs.ut.ee/gprofiler/snpense, and then using those genes for enrichment analysis of biological process at the website: https://biit.cs.ut.ee/gprofiler/gost. The enrichment analysis may aid in identifying which IV category determines the causality.
+The instrument classified by PCMR can be mapped into genes at the website: https://biit.cs.ut.ee/gprofiler/snpense, and then using those genes for enrichment analysis of biological process at the website: https://biit.cs.ut.ee/gprofiler/gost. The enrichment analysis may aid in excluding correlated horizontal pleiotropic variants for enhancing causal inference.
 
 ```R
 prb_thrd = 0.5
@@ -166,3 +166,4 @@ PCMR also contains a test based on bootstrapping against a particular correlated
 ```
 
 Based on the smaller correlated HVP effect, there is an insignificant relationship from SCZ to MDD. 
+

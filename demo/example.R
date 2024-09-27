@@ -1,6 +1,7 @@
 library(PCMR)
 library(parallel)
 
+t = Sys.time()
 X_clump = read.table("./data/scz_mdd/IVs_scz_mdd.csv",
                      header = 1,
                      sep = ",")
@@ -8,7 +9,7 @@ X_clump1 = read.table("./data/scz_mdd/initEst_scz_mdd.csv",
                       header = 1,
                       sep = ",")
 
-set.seed(100)
+set.seed(0)
 
 # Part 0 estimate initial values
 init = PCMR_initEst(X_clump1$beta_hat_1,X_clump1$seb1,
@@ -28,9 +29,8 @@ result_random = PCMR_testCorPlei(result_random) # calculate Pvalue of heterogene
 
 
 # Part 3 Causality analysis
-
 result_random = PCMR_testCausal(result_random)
-print(result_random$Pvalue)
+print(Sys.time() - t)
 
 
 # Part 4 classifed IV categories
