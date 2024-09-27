@@ -47,14 +47,14 @@ result_random = PCMR(X_clump$beta_hat_1, X_clump$seb1,
 # 2. Heterogeneity test in detecting correlated horizontal pleiotropy.
 result_random = PCMR_cEst(result_random,ref_beta_outcome = X_clump1$beta_hat_2,ref_se_outcome = X_clump1$seb2,cores=10) # Estimate the factor c.
 result_random = PCMR_testCausal_bootstrap(result_random,cores=10) # Bootstrapping to estimate D_HVP.
-result_random = PCMR_testCorPlei(result_random) # Calculate Pvalue of heterogeneity according to c and D_HVP.
+result_random = PCMR_testCorPlei(result_random) # Calculate Pvalue of heterogeneity test according to c and D_HVP.
 
 # 3. Causality evaluation in the presence of correlated horizontal pleiotropy.
 # Recommended to be applied in the presence of correlated horizontal pleiotropy, e.g. P_{plei-test} <= 0.20. 
 result_random = PCMR_testCausal(result_random)
 ```
 
-*Note: The bootstrapping calculations are time-consuming this example. This example took about 30 minutes. You can also directly load the results of the completed calculations,* `data(scz_mdd_results,package="PCMR")`.
+*Note: The bootstrapping calculations are time-consuming this example. This example took about 30+ minutes. You can also directly load the results of the completed calculations,* `data(scz_mdd_results,package="PCMR")`.
 
 
 
@@ -78,7 +78,7 @@ If there is only data for IVs, you can set the initial values sigma2 and rho to 
 The default model is the random effect model of PCMR (`model=1`).
 
 ```R
-> result_random$gamma
+> result_random$gamma # Correlated HVP effects
  33.33333%  66.66667% 
 0.01703264 0.18722993 
 
@@ -102,8 +102,8 @@ The default model is the random effect model of PCMR (`model=1`).
 > print(c(result_random$D_HVP))
 [1] 33.95296
 
-> print(c(result_random$CHVP_test,result_random$CHVP_test_Range)) # Pvalue of heterogeniety, and error range of this Pvalue
-[1] 9.009591e-08 2.596839e-08 2.642263e-07
+> print(result_random$CHVP_test) # Pvalue of heterogeniety, and error range of this Pvalue
+[1] 9.009591e-08
 ```
 
 The heterogeneity test implies that there is in significantly correlated horizontal pleiotropy between SCZ between MDD ($P_{plei-test}=9.00\times 10^{-08}$). 
@@ -111,7 +111,7 @@ The heterogeneity test implies that there is in significantly correlated horizon
 ### 3.  Causality evaluation in the presence of correlated horizontal pleiotropy
 
 ```R
-> print(c(result_random$effect,result_random$discernable_prob))
+> print(c(result_random$effect,result_random$discernable_prob)) # effect supported by the largest IV group, and the discernable probability
 0.1872299 0.7777778 
 
 > print(result_random$Pvalue)
