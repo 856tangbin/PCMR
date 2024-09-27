@@ -97,27 +97,28 @@ The default model is the random effect model of PCMR (`model=1`).
 
 ```R
 > print(c(result_random$c,result_random$c_sd))
-[1] 2.7376126 0.4140901
+[1] 2.4576944 0.3729505
 
 > print(c(result_random$D_HVP))
-[1] 39.4745
+[1] 33.95296
 
 > print(c(result_random$CHVP_test,result_random$CHVP_test_Range)) # Pvalue of heterogeniety, and error range of this Pvalue
-[1] 9.217905e-09 2.342845e-09 3.034035e-08
+[1] 9.009591e-08 2.596839e-08 2.642263e-07
 ```
 
-The heterogeneity test implies that there is in significantly correlated horizontal pleiotropy between SCZ between MDD ($P_{plei-test}=9.22\times 10^{-09}$). 
+The heterogeneity test implies that there is in significantly correlated horizontal pleiotropy between SCZ between MDD ($P_{plei-test}=9.00\times 10^{-08}$). 
 
 ### 3.  Causality evaluation in the presence of correlated horizontal pleiotropy
 
 ```R
+> print(c(result_random$effect,result_random$discernable_prob))
+0.1872299 0.7777778 
+
 > print(result_random$Pvalue)
 [1] 0.3290909
-
-> print(c(result_random$effect,result_random$discernable_prob))
 ```
 
-The results of PCMR's causality evaluation indicated that the causal effect of SCZ on MDD was insignificant ($P=0.329 > 0.05$).
+The effect supported by the largest IV group is 0.187, but the discernable probability is solely 0.778. The results of PCMR's causality evaluation indicated that the causal effect of SCZ on MDD was insignificant ($P=0.329$). 
 
 
 
@@ -159,10 +160,10 @@ PCMR also contains a test based on bootstrapping against a particular correlated
 
 ```R
 > print(c(result_random$bootstrap$mean_minClass,result_random$bootstrap$sd_minClass)) # bootstrapping for 1000 times
-[1] 0.01759228 0.02066573
+[1] 0.01846191 0.02189806
 
 > result_random$bootstrap$P_min
-[1] 0.3955003
+[1] 0.4000572
 ```
 
 Based on the smaller correlated HVP effect, there is an insignificant relationship from SCZ to MDD. 
