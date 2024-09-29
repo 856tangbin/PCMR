@@ -159,6 +159,7 @@ The BLUE category showed significant enrichment in biological processes primaril
 PCMR also contains a test based on bootstrapping against a particular correlated HVP effect. (If the effect is determined to be the causal effect, the bootstrapping test is a causal inference)：
 
 ```R
+# Bootstrapping test for the smaller correlated HVP effect; When replacing "min" with "max" is the test for the larger correlated HVP effect.
 > print(c(result_random$bootstrap$mean_minClass,result_random$bootstrap$sd_minClass)) # bootstrapping for 1000 times
 [1] 0.01846191 0.02189806
 
