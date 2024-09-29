@@ -54,7 +54,7 @@ result_random = PCMR_testCorPlei(result_random) # Calculate Pvalue of heterogene
 result_random = PCMR_testCausal(result_random)
 ```
 
-*Note: The bootstrapping calculations are time-consuming this example. The Step 0, Step 1 and Step 3 are quick, about one minute. The Step 2 for detecting correlated horizontal pleiotropy is time-consuming, taking about 30+ minutes. You can also directly load the results of the completed calculations,* `data(scz_mdd_results,package="PCMR")`.
+*Note: The bootstrapping calculations are time-consuming this example. The Step 0, Step 1 and Step 3 were quick, about one minute in total. The Step 2 for detecting correlated horizontal pleiotropy took about 30+ minutes. You can also directly load the results of the completed calculations,* `data(scz_mdd_results,package="PCMR")`.
 
 
 
