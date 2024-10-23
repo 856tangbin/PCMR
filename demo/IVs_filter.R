@@ -1,10 +1,9 @@
 library(readr)
 library(dplyr)
-
 library(stringr)
 
 set.seed(0)
-trait = read.csv("./data/trait.csv")
+trait = read.csv("./data/trait.csv") # The `trait.csv` is at the R package folder.
 
 # data load
 test = "SCZ -> MDD"
