@@ -10,6 +10,10 @@ PCMR is a clustering model for addressing various horizontal or vertical pleiotr
 - **Heterogeneity test** (PCMR's pleiotropy test): Detect the presence of correlated horizontal pleiotropy using the function of `PCMR_testCorPlei`;
 - **Causal analysis** (PCMR's causality evaluation): Evaluate whether a discernible dominant IV category supports a non-zero causal effect using the function of `PCMR_testCausal`. Recommended to be applied in the presence of correlated horizontal pleiotropy, e.g. $P_{plei-test} <= 0.20$. 
 
+
+
+
+
 ## Installation
 
 ```R
@@ -17,6 +21,10 @@ PCMR is a clustering model for addressing various horizontal or vertical pleiotr
 library(devtools)
 install_github("856tangbin/PCMR")
 ```
+
+
+
+
 
 ## Example
 
@@ -39,7 +47,7 @@ set.seed(0)
 init = PCMR_initEst(X_clump1$beta_hat_1,X_clump1$seb1,
                     X_clump1$beta_hat_2,X_clump1$seb2)
 
-# 1. Pleiotropic clustering.
+# 1. Pleiotropic clustering; 
 result_random = PCMR(X_clump$beta_hat_1, X_clump$seb1,
               X_clump$beta_hat_2,X_clump$seb2,num_gamma = 2,model="1",
               isIntact=T,rho=init$rho,sigma2 = init$sigma2)
@@ -54,7 +62,9 @@ result_random = PCMR_testCorPlei(result_random) # Calculate Pvalue of heterogene
 result_random = PCMR_testCausal(result_random)
 ```
 
-*Note: The Step 0, Step 1 and Step 3 were quick, about one minute in total. The Step 2 for detecting correlated horizontal pleiotropy took about 30+ minutes. You can also directly load the results of the completed calculations,* `data(scz_mdd_results,package="PCMR")`.
+*Note: The Step 0, Step 1 and Step 3 were quick, about one minute in total. The Step 2 for detecting correlated horizontal pleiotropy took about 30+ minutes. You can also directly load the results of the completed calculations using* `data(scz_mdd_results,package="PCMR")`.
+
+
 
 
 
@@ -71,11 +81,11 @@ $rho
 [1] 0.01972954
 ```
 
-If there is only data for IVs, you can set the initial values sigma2 and rho to zero.
+***Note***: The estimates of `sigma2` and `rho` represent the initial values of uncorrelated horizontal pleiotropy and sample overlap, respectively. 
+
+
 
 ### 1. Pleiotropic Clustering
-
-The default model is the random effect model of PCMR (`model=1`).
 
 ```R
 > result_random$gamma # Correlated HVP effects
@@ -91,42 +101,54 @@ The default model is the random effect model of PCMR (`model=1`).
 > PCMR_plot(result_random)
 ```
 
+***Note***: The classified estimates of `gamma` are the sum of correlated horizontal pleiotropic effect and causal effect, being Correlated HVP effect; `gSigma2` and `pi_gamma` measure the random correlated HVP effects and the proportion of distinct categories, respectively. The default model is the random effect model of PCMR (`model=1`), while the fixed model of PCMR (`model=2`) sets `gSigma2` at zero. 
+
 <img src="README.assets/Rplot_random.svg" alt="Rplot_random" align=center />
+
+
 
 ### 2. Heterogeneity test in detecting correlated horizontal pleiotropy
 
 ```R
-> print(c(result_random$c,result_random$c_sd))
-[1] 2.4576944 0.3729505
-
-> print(c(result_random$D_HVP))
-[1] 33.95296
-
-> print(result_random$CHVP_test) # Pvalue of heterogeniety, and error range of this Pvalue
+> print(result_random$CHVP_test) # Pvalue of heterogeniety test
 [1] 9.009591e-08
 ```
 
-The heterogeneity test implies that there is in significantly correlated horizontal pleiotropy between SCZ between MDD ($P_{plei-test}=9.00\times 10^{-08}$). 
+***Note***: The heterogeneity test implies that there is insignificantly correlated horizontal pleiotropy between SCZ and MDD ($P_{plei-test}=9.00\times 10^{-08}$). 
+
+
 
 ### 3.  Causality evaluation in the presence of correlated horizontal pleiotropy
 
 ```R
-> print(c(result_random$effect,result_random$discernable_prob)) # effect supported by the largest IV group, and the discernable probability
+> print(c(result_random$effect,result_random$discernable_prob))
 0.1872299 0.7777778 
 
 > print(result_random$Pvalue)
 [1] 0.3290909
 ```
 
-The effect supported by the largest IV group is 0.187, but the discernable probability is solely 0.778. The results of PCMR's causality evaluation indicated that the causal effect of SCZ on MDD was insignificant ($P=0.329$). 
+***Note***: The value of `effect` indicates the estimation of causal effect supported by the largest group (BLUE category), and `discernable_prob` represents the probability that the largest sample IV group is discernable as the dominant population IV group. `Pvalue` is the statistic value of PCMR's causality evaluation, which evaluates causal relationships in the presence of correlated horizontal pleiotropy. 
+
+
+
+### 4. Conclusions
+
+In SCZ and MDD, 
+
+- **Pleiotropic Clustering** (PCMR): PCMR clusters the instrumental variables into two distinct categories, with correlated HVP effects of 0.017 and 0.187;
+- **Heterogeneity test** (PCMR's pleiotropy test): The difference of correlated HVP effects is significant ($P_{plei-test}=9.00\times 10^{-08}$), meaning the presence of correlated horizontal pleiotropy. 
+- **Causal analysis** (PCMR's causality evaluation): The estimated causal effect supported by the largest IV group is 0.187, but the discernable probability is solely 0.778. The results of PCMR's causality evaluation indicated that the relationship of SCZ on MDD was insignificant ($P=0.329$). 
 
 
 
 
 
-## Integrating biological information for enhancing causal inference
+## Extension: Integrating biological information for enhancing causal inference
 
-The instrument classified by PCMR can be mapped into genes at the website: https://biit.cs.ut.ee/gprofiler/snpense, and then using those genes for enrichment analysis of biological process at the website: https://biit.cs.ut.ee/gprofiler/gost. The enrichment analysis may aid in excluding correlated horizontal pleiotropic variants for enhancing causal inference.
+The classified IV categories by PCMR facilitate the integration of biological information for mechanism interpretation, offering a valuable avenue to exclude correlated horizontal pleiotropic variants for enhancing causal inference. For example: 
+
+The instrument classified by PCMR can be mapped into genes at the website: https://biit.cs.ut.ee/gprofiler/snpense, and then using those genes for enrichment analysis of biological process at the website: https://biit.cs.ut.ee/gprofiler/gost. The enrichment analysis may aid in excluding correlated horizontal pleiotropic variants to enhance causal inference.
 
 ```R
 prb_thrd = 0.5
@@ -156,18 +178,18 @@ stringi::stri_c(X_clump$rsid[probability_1 < 1 - prb_thrd],collapse = " ") # The
 
 The BLUE category showed significant enrichment in biological processes primarily related to signaling transmission, with chemical synaptic transmission being the second significant ($2.344\times 10^{-3}$), while the GRAY category exhibited enrichment in two biological processes. As psychiatric disorders are associated with signal transmission, the BLUE category with a larger correlated HVP effect might exhibit correlated horizontal pleiotropy. 
 
-PCMR also contains a test based on bootstrapping against a particular correlated HVP effect. (If the effect is determined to be the causal effect, the bootstrapping test is a causal inference)：
+PCMR also contains a test based on bootstrapping against a particular correlated HVP effect. (**If the effect is determined to be the causal effect, the bootstrapping test is a causal inference**)：
 
 ```R
-# Bootstrapping test for the smaller correlated HVP effect; When replacing "min" with "max" is the test for the larger correlated HVP effect.
-> print(c(result_random$bootstrap$mean_minClass,result_random$bootstrap$sd_minClass)) # bootstrapping for 1000 times
-[1] 0.01846191 0.02189806
+# Causal estimation and standard error: 
+> print(c(result_random$bootstrap$mean_minClass,result_random$bootstrap$sd_minClass)) # Bootstrapping test for the smaller correlated HVP effect; When replacing `min` with `max` is the test for the larger correlated HVP effect.
+[1] 0.01759228 0.02066573
 
 > result_random$bootstrap$P_min
 [1] 0.4000572
 ```
 
-Based on the smaller correlated HVP effect, there is an insignificant relationship from SCZ to MDD. 
+**Conclusion**: Based on the smaller correlated HVP effect, the estimated causal effect (standard error) is 0.0176 (0.021) and SCZ has an insignificant relationship to MDD. 
 
 
 
