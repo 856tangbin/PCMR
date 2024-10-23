@@ -1,4 +1,3 @@
-library(cause)
 library(readr)
 library(dplyr)
 
@@ -30,6 +29,7 @@ for(ind in c("beta","se","P.value")){
     disease_data[[disease_cols[[ind]]]] = as.numeric(disease_data[[disease_cols[[ind]]]])
 }
 
+# The function of `gwas_merge` follows the merge in the CAUSE package.
 X <- gwas_merge(risk_data, disease_data, snp_name_cols = c(risk_cols[[1]], disease_cols[[1]]),
                 beta_hat_cols = c(risk_cols[[2]], disease_cols[[2]]),
                 se_cols = c(risk_cols[[3]], disease_cols[[3]]),
