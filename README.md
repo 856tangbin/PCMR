@@ -128,7 +128,7 @@ $rho
 [1] 0.3290909
 ```
 
-***Note***: The value of `effect` indicates the estimation of causal effect supported by the largest group (BLUE category), and `discernable_prob` represents the probability that the largest sample IV group is discernable as the dominant population IV group. `Pvalue` is the statistic value of PCMR's causality evaluation, which evaluates causal relationships in the presence of correlated horizontal pleiotropy. 
+***Note***: The value of `effect` indicates the estimation of causal effect supported by the largest group (BLUE category), and `discernable_prob` represents the probability that the largest sample IV group is discernable as the dominant population IV group. `Pvalue` is the statistic value of PCMR's causality evaluation, which evaluates causal relationships in the presence of correlated horizontal pleiotropy ($P_{plei-test} < 0.20$).  
 
 
 
@@ -190,6 +190,8 @@ PCMR also contains a test based on bootstrapping against a particular correlated
 ```
 
 **Conclusion**: Based on the smaller correlated HVP effect, the estimated causal effect (standard error) is 0.0176 (0.021) and SCZ has an insignificant relationship to MDD (P=0.400). 
+
+
 
 
 
