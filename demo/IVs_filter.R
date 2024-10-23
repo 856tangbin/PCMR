@@ -15,8 +15,8 @@ risk = trait[trait$Abbreviation == tolower(S[1]),]
 disease = trait[trait$Abbreviation == tolower(S[2]),]
 
 # load data
-SCZ_filepath = "./" # Download from https://pgc.unc.edu/for-researchers/download-results/; PMID:35396580
-MDD_filepath = "./" # Download from https://pgc.unc.edu/for-researchers/download-results/; PMID:30718901
+SCZ_filepath = "./" # PGC3_SCZ_wave3.european.autosome.public.v3.vcf.tsv.gz Download from https://pgc.unc.edu/for-researchers/download-results/; PMID:35396580
+MDD_filepath = "./" # PGC_UKB_depression_genome-wide.txt Download from https://pgc.unc.edu/for-researchers/download-results/; PMID:30718901
 risk_data = read_delim(SCZ_filepath,delim=list(space=" ",tab="\t")[[risk$delimeter]],skip=risk$skip)
 disease_data = read_delim(MDD_filepath,delim=list(space=" ",tab="\t")[[disease$delimeter]],skip=disease$skip)
 
