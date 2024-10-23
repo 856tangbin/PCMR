@@ -189,7 +189,7 @@ PCMR also contains a test based on bootstrapping against a particular correlated
 [1] 0.4000572
 ```
 
-**Conclusion**: Based on the smaller correlated HVP effect, the estimated causal effect (standard error) is 0.0176 (0.021) and SCZ has an insignificant relationship to MDD. 
+**Conclusion**: Based on the smaller correlated HVP effect, the estimated causal effect (standard error) is 0.0176 (0.021) and SCZ has an insignificant relationship to MDD (P=0.400). 
 
 
 
