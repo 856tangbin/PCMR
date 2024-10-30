@@ -194,8 +194,8 @@ pleiClassify = function(Paras){
         # Convergence judgment
         if(sum(abs(gamma_b - gamma[order(pi_gamma)])) < Paras$thred &
            sum(abs(b_b - b)) < Paras$thred &
-           sum(abs(sigma2_b - sigma2[order(pi_b)])) < Paras$thred**2 &
-           sum(abs(gSigma2_b - gSigma2[order(pi_gamma)])) < Paras$thred**2){
+           sum(abs(sigma2_b - sigma2[order(pi_b)])) < Paras$thred**2 * 10 &
+           sum(abs(gSigma2_b - gSigma2[order(pi_gamma)])) < Paras$thred**2 * 10){
             break
         }
 
@@ -448,8 +448,8 @@ pleiClassifyIntact = function(Paras){
         # Convergence judgment
         if(sum(abs(gamma_b - gamma[order(pi_gamma)])) < Paras$thred &
            sum(abs(b_b - b)) < Paras$thred &
-           sum(abs(sigma2_b - sigma2[order(pi_b)])) < Paras$thred**2 &
-           sum(abs(gSigma2_b - gSigma2[order(pi_gamma)])) < Paras$thred**2){
+           sum(abs(sigma2_b - sigma2[order(pi_b)])) < Paras$thred**2 * 10 &
+           sum(abs(gSigma2_b - gSigma2[order(pi_gamma)])) < Paras$thred**2 * 10){
             break
         }
     }
