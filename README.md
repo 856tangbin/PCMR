@@ -7,7 +7,7 @@
 PCMR is a clustering model for addressing various horizontal or vertical pleiotropic (HVP) effects. PCMR contains three components: 
 
 - **Pleiotropic Clustering** (PCMR): Cluster instruments using the function of `PCMR`;
-- **Heterogeneity test** (PCMR's pleiotropy test): Detect the presence of correlated horizontal pleiotropy using the function of `PCMR_testCorPlei`;
+- **Detecting correlated horizontal pleiotropy** (PCMR's pleiotropy test): Detect the presence of correlated horizontal pleiotropy using the function of `PCMR_testCorPlei`;
 - **Causal analysis** (PCMR's causality evaluation): Evaluate whether a discernible dominant IV category supports a non-zero causal effect using the function of `PCMR_testCausal`. Recommended to be applied in the presence of correlated horizontal pleiotropy, e.g. $P_{plei-test} <= 0.20$. 
 
 
@@ -121,14 +121,14 @@ $rho
 ### 3.  Causality evaluation in the presence of correlated horizontal pleiotropy
 
 ```R
-> print(c(result_random$effect,result_random$discernable_prob))
-0.1872299 0.7777778 
-
 > print(result_random$Pvalue)
 [1] 0.3290909
+
+> print(c(result_random$effect,result_random$discernable_prob))
+0.1872299 0.7777778 
 ```
 
-***Note***: The value of `effect` indicates the estimation of causal effect supported by the largest group (BLUE category), and `discernable_prob` represents the probability that the largest sample IV group is discernable as the dominant population IV group. `Pvalue` is the statistic value of PCMR's causality evaluation, which evaluates causal relationships in the presence of correlated horizontal pleiotropy ($P_{plei-test} < 0.20$).  
+***Note***: `Pvalue` is the statistic value of PCMR's causality evaluation, which evaluates relationships in the presence of correlated horizontal pleiotropy ($P_{plei-test} < 0.20$).  The value of `effect` indicates the estimation of causal effect supported by the largest group (BLUE category), and `discernable_prob` represents the probability that the largest sample IV group is discernable as the dominant population IV group. 
 
 
 
@@ -138,7 +138,7 @@ In SCZ and MDD,
 
 - **Pleiotropic Clustering** (PCMR): PCMR clusters the instrumental variables into two distinct categories, with correlated HVP effects of 0.017 and 0.187;
 - **Heterogeneity test** (PCMR's pleiotropy test): The difference of correlated HVP effects is significant ($P_{plei-test}=9.00\times 10^{-08}$), meaning the presence of correlated horizontal pleiotropy. 
-- **Causal analysis** (PCMR's causality evaluation): The estimated causal effect supported by the largest IV group is 0.187, but the discernable probability is solely 0.778. The results of PCMR's causality evaluation indicated that the relationship of SCZ on MDD was insignificant ($P=0.329$). 
+- **Causal analysis** (PCMR's causality evaluation): The results of PCMR's causality evaluation indicated that the relationship of SCZ on MDD was insignificant ($P=0.329$). The estimated causal effect supported by the largest IV group is 0.187, but the discernable probability is solely 0.778. 
 
 
 
@@ -181,7 +181,7 @@ The BLUE category showed significant enrichment in biological processes primaril
 PCMR also contains a test based on bootstrapping against a particular correlated HVP effect. (**If the effect is determined to be the causal effect, the bootstrapping test is a causal inference**)：
 
 ```R
-# Causal estimation and standard error: 
+# estimate and standard error: 
 > print(c(result_random$bootstrap$mean_minClass,result_random$bootstrap$sd_minClass)) # Bootstrapping test for the smaller correlated HVP effect; When replacing `min` with `max` is the test for the larger correlated HVP effect.
 [1] 0.01759228 0.02066573
 
@@ -189,7 +189,7 @@ PCMR also contains a test based on bootstrapping against a particular correlated
 [1] 0.4000572
 ```
 
-**Conclusion**: Based on the smaller correlated HVP effect, the estimated causal effect (standard error) is 0.0176 (0.021) and SCZ has an insignificant relationship to MDD (P=0.400). 
+**Conclusion**: Based on the smaller correlated HVP effect, the estimates (standard error) is 0.0176 (0.021) and SCZ has an insignificant relationship to MDD (P=0.400). 
 
 
 
