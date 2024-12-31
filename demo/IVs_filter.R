@@ -39,7 +39,7 @@ X <- gwas_merge(risk_data, disease_data, snp_name_cols = c(risk_cols[[1]], disea
 r2_thresh = 0.1
 pval_thresh = 5e-8
 
-# IVs_scz_mdd.csv
+# IVs_scz_mdd.csv: IVs
 X_clump <- X[X$p1 < pval_thresh,] %>%
     rename(rsid = snp,
            pval = p1) %>%
@@ -49,8 +49,8 @@ X_clump <- X[X$p1 < pval_thresh,] %>%
                        plink_bin = "/home/tb/tools/GWAS//plink",
                        bfile="/home/tb/ref/1kg.v3//EUR")
 
-# initEst_scz_mdd.csv
-X1 = X[X$p1 > 0.5,]
+# initEst_scz_mdd.csv: Background variants of outcome
+X1 = X[X$p1 > 0.5,] # genetic variants, excluding exposure association (p>0.5), used to assess for uncorrelated horizontal pleiotropy.
 X_clump1 <- X1[sample(seq(dim(X1)[1]),100000),] %>%
     rename(rsid = snp,
            pval = p1) %>%
