@@ -111,7 +111,7 @@ $rho
 
 ```R
 > print(result_random$CHVP_test) # Pvalue of heterogeniety test
-[1] 9.009591e-08
+[1] 1.128664e-07
 ```
 
 ***Note***: The heterogeneity test implies that there is insignificantly correlated horizontal pleiotropy between SCZ and MDD ($P_{plei-test}=9.00\times 10^{-08}$). 
@@ -125,7 +125,7 @@ $rho
 [1] 0.3290909
 
 > print(c(result_random$effect,result_random$discernable_prob))
-0.1872299 0.7777778 
+0.1872299 0.7917918 
 ```
 
 ***Note***: `Pvalue` is the statistic value of PCMR's causality evaluation, which evaluates relationships in the presence of correlated horizontal pleiotropy ($P_{plei-test} < 0.20$).  The value of `effect` indicates the estimation of causal effect supported by the largest group (BLUE category), and `discernable_prob` represents the probability that the largest sample IV group is discernable as the dominant population IV group. 
@@ -137,8 +137,8 @@ $rho
 In SCZ and MDD, 
 
 - **Pleiotropic Clustering** (PCMR): PCMR clusters the instrumental variables into two distinct categories, with correlated HVP effects of 0.017 and 0.187;
-- **Heterogeneity test** (PCMR's pleiotropy test): The difference of correlated HVP effects is significant ($P_{plei-test}=9.00\times 10^{-08}$), meaning the presence of correlated horizontal pleiotropy. 
-- **Causal analysis** (PCMR's causality evaluation): The results of PCMR's causality evaluation indicated that the relationship of SCZ on MDD was insignificant ($P=0.329$). The estimated causal effect supported by the largest IV group is 0.187, but the discernable probability is solely 0.778. 
+- **Heterogeneity test** (PCMR's pleiotropy test): The difference of correlated HVP effects is significant ($P_{plei-test}=1.13\times 10^{-07}$), meaning the presence of correlated horizontal pleiotropy. 
+- **Causal analysis** (PCMR's causality evaluation): The results of PCMR's causality evaluation indicated that the relationship of SCZ on MDD was insignificant ($P=0.329$). The estimated causal effect supported by the largest IV group is 0.187, but the discernable probability is solely 0.791. 
 
 
 
@@ -183,13 +183,13 @@ PCMR also contains a test based on bootstrapping against a particular correlated
 ```R
 # estimate and standard error: 
 > print(c(result_random$bootstrap$mean_minClass,result_random$bootstrap$sd_minClass)) # Bootstrapping test for the smaller correlated HVP effect; When replacing `min` with `max` is the test for the larger correlated HVP effect.
-[1] 0.01759228 0.02066573
+[1] 0.01915753 0.02209725
 
 > result_random$bootstrap$P_min
-[1] 0.4000572
+[1] 0.386865
 ```
 
-**Conclusion**: Based on the smaller correlated HVP effect, the estimates (standard error) is 0.0176 (0.021) and SCZ has an insignificant relationship to MDD (P=0.400). 
+**Conclusion**: Based on the smaller correlated HVP effect, the estimates (standard error) is 0.019 (0.022) and SCZ has an insignificant relationship to MDD (P=0.387). 
 
 
 
