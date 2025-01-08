@@ -1,8 +1,12 @@
-PCMR_testCausal_bootstrap = function(result,samples=1000,cores=15){
+PCMR_testCausal_bootstrap = function(result,samples=1000,cores=15, seed = 25010814){
+
+    set.seed(seed)
+    randomSeeds = as.integer(runif(samples,0,1e8))
 
     # bootstrapping for observed IVs
     sub_cl <- makeCluster(cores)
     clusterExport(sub_cl,"result",envir = environment())
+    clusterExport(sub_cl,"randomSeeds",envir = environment())
 
     Cup = parSapply(sub_cl,seq(samples),.boot,result,simplify = TRUE)
     stopCluster(sub_cl) # close

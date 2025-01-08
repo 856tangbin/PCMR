@@ -1,6 +1,8 @@
 .boot = function(.,result){
     library(PCMR)
 
+    set.seed(randomSeeds[.])
+
     size = length(result$Paras$beta_ex)
     Ind = sample(seq(size),size = size,replace = T)
 
@@ -28,6 +30,8 @@
 
 .boot_sample = function(.,result,beta_outcome,se_outcome){
     library(PCMR)
+
+    set.seed(randomSeeds[.])
 
     result_sample = result
     result_sample$Paras$beta_out = beta_outcome[Seqs[[.]]] + result$est1 * rnorm(length(result$Paras$beta_ex),result$Paras$beta_ex,result$Paras$beta_ex_se)

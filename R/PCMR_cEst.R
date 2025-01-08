@@ -1,5 +1,5 @@
-PCMR_cEst = function(result,ref_beta_outcome,ref_se_outcome,samples=100,sample_boot = 30,cores=15, err_boot=100){
-
+PCMR_cEst = function(result,ref_beta_outcome,ref_se_outcome,samples=100,sample_boot = 30,cores=15, err_boot=100, seed = 25010814){
+    set.seed(seed)
 
     result$est1 = PCMR(result$Paras$beta_ex, result$Paras$beta_ex_se,
                        result$Paras$beta_out,result$Paras$beta_out_se,num_gamma = 1,model="1")$gamma
@@ -14,12 +14,15 @@ PCMR_cEst = function(result,ref_beta_outcome,ref_se_outcome,samples=100,sample_b
         }
     }
 
+    randomSeeds = as.integer(runif(samples*sample_boot,min = 0,max=1e8))
+
     # bootstrapping
     Ncol = result$Paras$num_gamma + 1
 
     # multithread
     sub_cl <- makeCluster(cores)
     clusterExport(sub_cl,"Seqs",envir = environment())
+    clusterExport(sub_cl,"randomSeeds",envir = environment())
     clusterExport(sub_cl,".boot",envir = environment())
     Cup = clusterApplyLB(sub_cl,seq(samples*sample_boot),.boot_sample,result,ref_beta_outcome,ref_se_outcome)
     Cup_gamma = matrix(unlist(Cup),ncol=Ncol,byrow=T)
