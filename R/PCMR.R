@@ -148,6 +148,11 @@ PCMR_testCausal = function(result){
 
 # testing random effect of correlated pleiotropy
 PCMR_testCorPlei = function(result){
+
+    if(result$Paras$num_gamma == 1){
+        cat("This function needs to set `num_gamma = 2`.")
+        return(result)
+    }
     # corrected Pvalue range
     result$CHVP_test = pchisq(result$D_HVP,result$c,lower.tail = F)
     result$CHVP_test_Range = pchisq(result$D_HVP,

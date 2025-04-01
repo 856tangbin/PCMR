@@ -1,4 +1,10 @@
 PCMR_cEst = function(result,ref_beta_outcome,ref_se_outcome,samples=100,sample_boot = 30,cores=15, err_boot=100, seed = 25010814){
+
+    if(result$Paras$num_gamma == 1){
+        cat("This function needs to set `num_gamma = 2`.")
+        return(result)
+    }
+
     set.seed(seed)
 
     result$est1 = PCMR(result$Paras$beta_ex, result$Paras$beta_ex_se,

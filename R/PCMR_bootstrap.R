@@ -1,5 +1,10 @@
 PCMR_testCausal_bootstrap = function(result,samples=1000,cores=15, seed = 25010814){
 
+    if(result$Paras$num_gamma == 1){
+        cat("This function needs to set `num_gamma = 2`.")
+        return(result)
+    }
+
     set.seed(seed)
     randomSeeds = as.integer(runif(samples,0,1e8))
 
