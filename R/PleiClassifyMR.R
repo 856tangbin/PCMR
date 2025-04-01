@@ -247,8 +247,8 @@ pleiClassifyIntact = function(Paras){
 
 
     size = length(Paras$beta_ex)
-    min_gamma = min(Paras$beta_out/Paras$beta_ex)
-    max_gamma = max(Paras$beta_out/Paras$beta_ex)
+    min_gamma = min(Paras$beta_out/Paras$beta_ex) - 1e-3
+    max_gamma = max(Paras$beta_out/Paras$beta_ex) + 1e-3
 
 
     # Initialization
