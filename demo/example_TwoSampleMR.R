@@ -3,7 +3,7 @@ library(TwoSampleMR)
 library(PCMR)
 library(parallel)
 
-opengwas_jwt = ""
+opengwas_jwt = "" # Token (JWT) by registered on https://api.opengwas.io/profile/
 
 set.seed(0)
 # background variants information ################
