@@ -1,6 +1,6 @@
 # PCMR: Pleiotropic Clustering of Mendelian Randomization
 
-> This R package implements the PCMR method and provides efficient solutions and new insights for MR in clinically relevant or genetically overlapping traits.
+> This R package implements the PCMR method (https://doi.org/[10.1038/s41467-025-57912-5](https://doi.org/10.1038/s41467-025-57912-5)) and provides efficient solutions and new insights for MR in clinically relevant or genetically overlapping traits. 
 
 ## Usage 
 
@@ -10,7 +10,7 @@ PCMR is a clustering model for addressing various horizontal or vertical pleiotr
 - **Detecting correlated horizontal pleiotropy** (PCMR's pleiotropy test): Detect the presence of correlated horizontal pleiotropy using the function of `PCMR_testCorPlei`;
 - **Causal analysis** (PCMR's causality evaluation): Evaluate whether a discernible dominant IV category supports a non-zero causal effect using the function of `PCMR_testCausal`. Recommended to be applied in the presence of correlated horizontal pleiotropy, e.g. $P_{plei-test} <= 0.20$. 
 
-
+Data preprocessing of IVs for PCMR was provided in `./demo/IVs_filter.R`; We provided an example of SCZ and MDD in `./demo/example.R`, as well as, an example of combining R package `TwoSampleMR` to analysis the causal relationship between Smoking and BIP in `./demo/example_TwoSampleMR.R`.
 
 
 
