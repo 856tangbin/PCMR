@@ -1,6 +1,6 @@
 # PCMR: Pleiotropic Clustering of Mendelian Randomization
 
-> This R package implements the PCMR method (https://doi.org/[10.1038/s41467-025-57912-5](https://doi.org/10.1038/s41467-025-57912-5)) and provides efficient solutions and new insights for MR in clinically relevant or genetically overlapping traits. 
+> This R package implements the PCMR method (https://doi.org/10.1038/s41467-025-57912-5) and provides efficient solutions and new insights for MR in clinically relevant or genetically overlapping traits. 
 
 ## Usage 
 
