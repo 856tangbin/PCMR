@@ -26,6 +26,8 @@ exposure_dat <- extract_instruments("ieu-b-4877",r2 = 0.1,opengwas_jwt = opengwa
 outcome_dat <- extract_outcome_data(snps=exposure_dat$SNP, outcomes="ieu-b-5110",opengwas_jwt = opengwas_jwt) # BIP
 
 dat <- harmonise_data(exposure_dat, outcome_dat)
+dat <- dat[dat$mr_keep,]
+
 X_clump = data.frame(rsid = dat$SNP,
                      beta_hat_1 = dat$beta.exposure,
                      seb1 = dat$se.exposure,
